@@ -2,10 +2,10 @@ import platform
 
 import psutil
 
-from src.mcp_server_dongjunqaq import my_mcp
+from src.mcp_server_dongjunqaq import mcp
 
 
-@my_mcp.tool()
+@mcp.tool()
 def get_platform_info() -> dict:
     """获取平台的相关信息"""
     platform_info: dict[str:str] = {
