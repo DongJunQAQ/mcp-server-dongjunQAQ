@@ -1,6 +1,6 @@
 from mcp.server.fastmcp import FastMCP
 
-my_mcp = FastMCP("Demo")  # 创建MCP Server并命名为"Demo"
+my_mcp = FastMCP("mcp-server-DongJunQAQ")  # 创建MCP Server并命名
 
 
 def main() -> None:
