@@ -11,7 +11,7 @@
 {
   "mcpServers": {
     "MCP-Server-DongJunQAQ": {
-      "registryUrl": "https://pypi.tuna.tsinghua.edu.cn/simple",
+      "registryUrl": "http://mirrors.aliyun.com/pypi/simple/",
       "command": "uvx",
       "args": ["mcp-server-dongjunqaq"]
     }
