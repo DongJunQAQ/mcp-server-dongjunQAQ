@@ -1,3 +1,19 @@
-from mcp_server_dongjunqaq.tools import download_video
+from mcp_server_dongjunqaq import tools
 
-print(download_video("https://www.bilibili.com/video/BV1RTtczyETu/?spm_id_from=333.1007.tianma.2-2-5.click&vd_source=a2d19438f2d39f5bca53e78262bbb93d "))
+
+def test_get_platform_info():
+    print(tools.get_platform_info())
+
+
+def test_get_env():
+    print(tools.get_env("Path"))
+
+
+def test_download_video():
+    url = "https://www.bilibili.com/video/BV1RTtczyETu/"
+    print(tools.download_video(url))
+
+
+test_get_platform_info()
+test_get_env()
+# test_download_video()
