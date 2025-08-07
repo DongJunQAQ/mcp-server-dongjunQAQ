@@ -1,9 +1,10 @@
 from mcp.server.fastmcp import FastMCP
 
-from .tools import get_platform_info
+import tools
 
 mcp = FastMCP("mcp-server-DongJunQAQ")  # 创建MCP Server并命名
-mcp.add_tool(get_platform_info)  # 注册工具
+mcp.add_tool(tools.get_platform_info)  # 注册工具
+mcp.add_tool(tools.get_env)
 
 
 def main() -> None:

@@ -1,3 +1,4 @@
+import os
 import platform
 
 import psutil
@@ -15,3 +16,13 @@ def get_platform_info() -> dict:
         "总内存(GB)": round(psutil.virtual_memory().total / (1024 ** 3), 2),  # round(...,2)将一个数四舍五入并保留2位小数
     }
     return platform_info
+
+
+def get_env(key: str) -> str:
+    """获取指定环境变量的值"""
+    path_env = os.getenv(key)
+    return path_env
+
+# 1.打/解包文件
+# 2.研究下MCP中提示词的用法
+# 3.远程操控主机
