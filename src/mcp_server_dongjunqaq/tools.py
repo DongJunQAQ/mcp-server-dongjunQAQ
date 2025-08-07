@@ -3,6 +3,7 @@ import platform
 import shutil
 
 import psutil
+from yt_dlp import YoutubeDL
 
 
 def get_platform_info() -> dict:
@@ -46,5 +47,16 @@ def make_archive(src: str, compress_format: str) -> str:
         shutil.make_archive(src_abs, compress_format, src_abs)
     return f'已打包为{src_abs}.{compress_format}文件'
 
-# 1.解包文件
-# 2.研究下MCP中提示词的用法
+
+def download_video(url: str) -> str:
+    """下载指定URL的视频至用户的家目录的Downloads文件夹中，并返回下载后文件的绝对路径"""
+    download_dir = os.path.expanduser("~\Downloads")
+    os.makedirs(download_dir, exist_ok=True)  # 确保有系统中存在Downloads目录，没有则自动创建
+    ydl_opts = {
+        'outtmpl': os.path.join(download_dir, '%(title)s.%(ext)s'),  # 格式化为"Downloads目录/视频标题.扩展名"
+    }
+    with YoutubeDL(ydl_opts) as ydl:
+        video_info = ydl.extract_info(url, download=True)  # 获取视频信息并执行下载
+        video_file_name = ydl.prepare_filename(video_info)  # 获取下载文件的文件名（包含路径）
+        video_absolute_path = os.path.abspath(video_file_name)  # 将文件名转换为绝对路径
+        return video_absolute_path
