@@ -1,5 +1,6 @@
 import os
 import platform
+import shutil
 
 import psutil
 
@@ -23,6 +24,22 @@ def get_env(key: str) -> str:
     path_env = os.getenv(key)
     return path_env
 
-# 1.打/解包文件
+
+def get_compress_format() -> dict:
+    """获取支持的压缩格式"""
+    return {".zip": "zip", ".tar": "tar", ".gz.tar": "gztar", ".bz.tar": "bztar", ".xz.tar": "xztar"}
+
+
+def make_archive(des: str, src: str, compress_format: str) -> str:
+    """
+    打包并压缩指定内容；
+    :param des:打包后输出的文件名
+    :param compress_format:压缩格式
+    :param src:需要打包的文件或目录
+    :return:打包后的文件名+压缩格式后缀名
+    """
+    shutil.make_archive(des, compress_format, src)
+    return f'已打包为{des}.{compress_format}文件'
+
+# 1.解包文件
 # 2.研究下MCP中提示词的用法
-# 3.远程操控主机
