@@ -1,6 +1,6 @@
 from mcp.server.fastmcp import FastMCP
 
-import tools
+from mcp_server_dongjunqaq import tools
 
 mcp = FastMCP("mcp-server-DongJunQAQ")  # 创建MCP Server并命名
 mcp.add_tool(tools.get_platform_info)  # 注册工具
