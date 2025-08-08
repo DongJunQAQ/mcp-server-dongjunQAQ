@@ -19,6 +19,18 @@
 
   ​    compress_format：压缩格式
 
+- download_video - 下载指定URL的视频至用户的家目录的Downloads文件夹中；
+  
+  必填参数：
+  
+  ​    url：需要下载视频的URL地址
+  
+  **注意：使用该工具时需提前在系统中安装ffmpeg**（音视频处理工具库可以操作音视频的分离与合并），否则会导致视频下载失败或是视频无声音；
+  
+  ​    Windows安装：下载地址：https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z（推荐使用迅雷下载）下载完成之后解压并进入bin目录将ffmpeg.exe、ffprobe.exe文件拷贝至C:\Windows\System32\目录下或是环境变量的任一目录下，使得可以在命令行中执行这两个命令；
+  
+  ​    Linux安装（CentOS、Rocky Linux）：`dnf install ffmpeg-free ffmpeg-free-devel`
+  
   ​    
 
 ## 配置：
