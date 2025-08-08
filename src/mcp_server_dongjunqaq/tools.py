@@ -1,6 +1,9 @@
 import os
 import platform
 import shutil
+import tarfile
+import zipfile
+from pathlib import Path
 
 import psutil
 from yt_dlp import YoutubeDL
@@ -46,6 +49,29 @@ def make_archive(src: str, compress_format: str) -> str:
     else:
         shutil.make_archive(src_abs, compress_format, src_abs)
     return f'已打包为{src_abs}.{compress_format}文件'
+
+
+def decompress(src: str) -> str:
+    """解压缩指定的压缩文件，返回解压后存放文件的目录"""
+    src_abs = os.path.abspath(src)
+    parent_dir = os.path.dirname(src_abs)
+    file_basename = os.path.splitext(os.path.basename(src_abs))[0]  # 获取压缩文件的文件名（不含后缀）
+    while Path(file_basename).suffix:  # 处理多重后缀（如.tar.gz、.tar.bz2等）
+        file_basename = os.path.splitext(file_basename)[0]  # 确保只获取纯文件名
+    # 解压前先在同级目录下创建一个与该压缩包同名的目录，然后将解压后的内容存放至该目录中
+    target_dir = os.path.join(parent_dir, file_basename)
+    os.makedirs(target_dir, exist_ok=True)
+    file_suffix = Path(src_abs).suffix  # 获取文件后缀，判断压缩类型
+    if file_suffix == ".zip":
+        with zipfile.ZipFile(src_abs, 'r') as zip_ref:
+            # 解决解压后中文文件名乱码的问题
+            for file_info in zip_ref.infolist():
+                file_info.filename = file_info.filename.encode('cp437').decode('gbk')
+                zip_ref.extract(file_info, target_dir)  # 解压文件到指定目录
+    else:
+        with tarfile.open(src_abs, 'r') as tar:
+            tar.extractall(path=target_dir)
+    return f"所有文件均已解压到 {target_dir} 目录"
 
 
 def download_video(url: str) -> str:

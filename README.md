@@ -19,6 +19,12 @@
 
   - compress_format：压缩格式
 
+- decompress - 解压缩指定的压缩文件，返回解压后存放文件的目录；
+  
+  必填参数：
+
+  - src: 需要解压缩的压缩文件路径
+
 - download_video - 下载指定URL的视频至用户的家目录的Downloads文件夹中；
   
   必填参数：

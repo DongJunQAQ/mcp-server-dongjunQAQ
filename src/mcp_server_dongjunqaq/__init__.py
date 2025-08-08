@@ -8,6 +8,7 @@ mcp.add_tool(tools.get_platform_info)
 mcp.add_tool(tools.get_env)
 mcp.add_tool(tools.get_compress_format)
 mcp.add_tool(tools.make_archive)
+mcp.add_tool(tools.decompress)
 mcp.add_tool(tools.download_video)
 
 
