@@ -6,6 +6,7 @@ import zipfile
 from pathlib import Path
 
 import psutil
+from openai import OpenAI
 from yt_dlp import YoutubeDL
 
 
@@ -86,3 +87,27 @@ def download_video(url: str) -> str:
         video_file_name = ydl.prepare_filename(video_info)  # 获取下载文件的文件名（包含路径）
         video_absolute_path = os.path.abspath(video_file_name)  # 将文件名转换为绝对路径
         return video_absolute_path
+
+
+def query_command(require: str) -> str:
+    # """根据用户输入的需求通过大模型去查询相应的命令并返回此命令（仅返回命令无需返回其他的文本）"""
+    """根据用户输入的需求通过大模型去查询Windows或Linux操作系统的命令并返回此命令以及完整的命令说明"""
+    client = OpenAI(api_key="5d5b5fdd-d62e-4e49-84d8-13dd2b0002e2",
+                    base_url="https://ark.cn-beijing.volces.com/api/v3", )
+    response = client.chat.completions.create(
+        model="ep-20250809203804-sst5p",  # Doubao-1.5-pro-32k
+        messages=[
+            {"role": "system",
+             # "content": "你现在是一名运维工程师，你负责保障系统和服务的正常运行。你熟悉各种监控工具，能够高效地处理故障和进行系统优化。你还懂得如何进行数据备份和恢复，以保证数据安全。请在这个角色下为我解答以下问题。当我问你有关Linux或Windows命令的问题时，你只需告诉我具体的命令即可无需多余的文字。"},
+             "content": "你现在是一名运维工程师，你负责保障系统和服务的正常运行。你熟悉各种监控工具，能够高效地处理故障和进行系统优化。你还懂得如何进行数据备份和恢复，以保证数据安全。请在这个角色下为我解答以下问题。只需返回相关命令以及命令说明无需返回图形化界面的内容"},
+            {"role": "user", "content": f"在{platform.system()}系统中{require}"},  # 提问前先获取平台系统
+        ],
+        stream=False
+    )
+    results = response.choices[0].message.content
+    return results
+
+
+def execute_command():
+    """自动执行query_command工具返回的命令，无法执行删除之类的命令并警告用户后果"""
+    pass
