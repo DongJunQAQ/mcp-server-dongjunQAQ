@@ -36,7 +36,7 @@
   - Windows下载地址：https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z
   （推荐使用迅雷下载）下载完成之后解压并进入bin目录将ffmpeg.exe、ffprobe.exe文件拷贝至C:\Windows\System32\目录下或是环境变量的任一目录下，使得可以在命令行中执行这两个命令；
   
-  - Linux下载安装（CentOS、Rocky Linux）：`dnf install ffmpeg-free ffmpeg-free-devel`
+  - Linux下载安装（CentOS、Rocky Linux）：`dnf config-manager --set-enabled crb && dnf install ffmpeg-free ffmpeg-free-devel`
   
   ​    
 
@@ -48,7 +48,6 @@
 {
   "mcpServers": {
     "MCP-Server-DongJunQAQ": {
-      "registryUrl": "http://mirrors.aliyun.com/pypi/simple/",
       "command": "uvx",
       "args": ["mcp-server-dongjunqaq"]
     }
