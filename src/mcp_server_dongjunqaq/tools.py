@@ -76,7 +76,7 @@ def decompress(src: str) -> str:
 
 def download_video(url: str) -> str:
     """下载指定URL的视频至用户的家目录的Downloads文件夹中，并返回下载后文件的绝对路径"""
-    download_dir = os.path.expanduser("~\Downloads")
+    download_dir = Path.home() / "Downloads"  # 会自动处理不同系统的路径分隔符
     os.makedirs(download_dir, exist_ok=True)  # 确保有系统中存在Downloads目录，没有则自动创建
     ydl_opts = {
         'outtmpl': os.path.join(download_dir, '%(title)s.%(ext)s'),  # 格式化为"Downloads目录/视频标题.扩展名"

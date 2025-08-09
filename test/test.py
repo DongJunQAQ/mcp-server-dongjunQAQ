@@ -20,5 +20,5 @@ def test_download_video():
 
 # test_get_platform_info()
 # test_get_env()
-test_decompress()
-# test_download_video()
+# test_decompress()
+test_download_video()
