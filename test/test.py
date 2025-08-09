@@ -10,7 +10,7 @@ def test_get_env():
 
 
 def test_decompress():
-    print(tools.decompress("C:\\Users\\2222\Videos\Captures\文件一.zip"))
+    print(tools.decompress("E:\新建文件夹\myfile.zip"))
 
 
 def test_download_video():

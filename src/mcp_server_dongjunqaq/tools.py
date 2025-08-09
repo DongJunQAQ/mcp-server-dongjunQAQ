@@ -66,7 +66,7 @@ def decompress(src: str) -> str:
         with zipfile.ZipFile(src_abs, 'r') as zip_ref:
             # 解决解压后中文文件名乱码的问题
             for file_info in zip_ref.infolist():
-                file_info.filename = file_info.filename.encode('cp437').decode('gbk')
+                file_info.filename = file_info.filename.encode('utf-8').decode('utf-8')
                 zip_ref.extract(file_info, target_dir)  # 解压文件到指定目录
     else:
         with tarfile.open(src_abs, 'r') as tar:
