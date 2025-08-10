@@ -43,7 +43,12 @@
   必填参数：
   
   - require：你的需求，如“查找当前用户家目录下Downloads目录中t开头的文件”；
-  ​    
+
+- execute_command - 自动执行读取类命令，无法自动执行写入、删除之类的命令；
+
+  必填参数：
+
+  - command：由query_command工具返回的Windows或Linux命令；
 
 ## 配置：
 

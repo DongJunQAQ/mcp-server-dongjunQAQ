@@ -1,6 +1,7 @@
 import os
 import platform
 import shutil
+import subprocess
 import tarfile
 import zipfile
 from pathlib import Path
@@ -107,6 +108,14 @@ def query_command(require: str) -> str:
     return results
 
 
-def execute_command():
-    """自动执行query_command工具返回的命令，无法执行删除之类的命令并警告用户后果"""
-    pass
+def execute_command(command: str) -> str:
+    """提取出query_command工具返回的命令（只提取对应主机系统的命令无需任何多余文字）并自动执行读取类命令，无法自动执行写入、删除之类的命令并警告用户后果，最后返回命令执行的结果"""
+    run_result = "未知系统，无法执行命令"
+    if platform.system() == "Windows":
+        result = subprocess.run(["powershell", "-Command", command], text=True,
+                                capture_output=True)  # text=True：命令的输出结果将以字符串形式返回，否则以字节流形式返回，capture_output=True：表示捕获命令的标准输出（stdout）和标准错误（stderr）
+        run_result = f"标准输出:\n{result.stdout}\n标准错误:\n{result.stderr}"
+    elif platform.system() == "Linux":
+        result = subprocess.run(command, shell=True, text=True, capture_output=True)  # 若命令通过空格相连则需加上shell=True
+        run_result = f"标准输出:\n{result.stdout}\n标准错误:\n{result.stderr}"
+    return run_result

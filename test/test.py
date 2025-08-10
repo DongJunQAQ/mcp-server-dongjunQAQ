@@ -24,8 +24,15 @@ def test_query_command():
     print(tools.query_command(require))
 
 
+def test_execute_command():
+    # command = 'Get-ChildItem -Path "C:\\Users\\2222\Downloads" -Filter "t*"'
+    command = 'dir C:\\Users\\2222\\Downloads\\t*'
+    print(tools.execute_command(command))
+
+
 # test_get_platform_info()
 # test_get_env()
 # test_decompress()
 # test_download_video()
-test_query_command()
+# test_query_command()
+test_execute_command()

@@ -11,6 +11,7 @@ mcp.add_tool(tools.make_archive)
 mcp.add_tool(tools.decompress)
 mcp.add_tool(tools.download_video)
 mcp.add_tool(tools.query_command)
+mcp.add_tool(tools.execute_command)
 
 
 def main() -> None:
