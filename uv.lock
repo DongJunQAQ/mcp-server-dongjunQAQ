@@ -257,7 +257,7 @@ cli = [
 
 [[package]]
 name = "mcp-server-dongjunqaq"
-version = "0.5.3"
+version = "0.6.0"
 source = { editable = "." }
 dependencies = [
     { name = "mcp", extra = ["cli"] },

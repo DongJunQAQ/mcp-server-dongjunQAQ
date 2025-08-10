@@ -38,6 +38,11 @@
   
   - Linux下载安装（CentOS、Rocky Linux）：`dnf config-manager --set-enabled crb && dnf install ffmpeg-free ffmpeg-free-devel`
   
+- query_command - 根据用户输入的需求通过大模型去查询Windows或Linux操作系统的命令并返回命令说明；
+
+  必填参数：
+  
+  - require：你的需求，如“查找当前用户家目录下Downloads目录中t开头的文件”；
   ​    
 
 ## 配置：
@@ -49,7 +54,12 @@
   "mcpServers": {
     "MCP-Server-DongJunQAQ": {
       "command": "uvx",
-      "args": ["mcp-server-dongjunqaq"]
+      "args": ["mcp-server-dongjunqaq"],
+      "env": {
+        "API_KEY": "YOUR_API_KEY",
+        "BASE_URL": "https://ark.cn-beijing.volces.com/api/v3",
+        "MODEL": "YOUR_MODEL"
+      }
     }
   }
 }
