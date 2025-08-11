@@ -1,6 +1,6 @@
 [project]
 name = "mcp-server-dongjunqaq"
-version = "0.7.0"
+version = "0.7.1"
 description = "DongJun的MCP Server"
 readme = "README.md"
 authors = [

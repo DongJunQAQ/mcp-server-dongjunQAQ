@@ -1,5 +1,6 @@
 import os
 import platform
+import re
 import shutil
 import subprocess
 import tarfile
@@ -91,14 +92,12 @@ def download_video(url: str) -> str:
 
 
 def query_command(require: str) -> str:
-    # """根据用户输入的需求通过大模型去查询相应的命令并返回此命令（仅返回命令无需返回其他的文本）"""
     """根据用户输入的需求通过大模型去查询Windows或Linux操作系统的命令并返回此命令以及完整的命令说明"""
     client = OpenAI(api_key=os.environ.get("API_KEY"), base_url=os.environ.get("BASE_URL"), )
     response = client.chat.completions.create(
         model=os.environ.get("MODEL"),
         messages=[
             {"role": "system",
-             # "content": "你现在是一名运维工程师，你负责保障系统和服务的正常运行。你熟悉各种监控工具，能够高效地处理故障和进行系统优化。你还懂得如何进行数据备份和恢复，以保证数据安全。请在这个角色下为我解答以下问题。当我问你有关Linux或Windows命令的问题时，你只需告诉我具体的命令即可无需多余的文字。"},
              "content": "你现在是一名运维工程师，你负责保障系统和服务的正常运行。你熟悉各种监控工具，能够高效地处理故障和进行系统优化。你还懂得如何进行数据备份和恢复，以保证数据安全。请在这个角色下为我解答以下问题。只需返回相关命令以及命令说明无需返回图形化界面的内容"},
             {"role": "user", "content": f"在{platform.system()}系统中{require}"},  # 提问前先获取平台系统
         ],
@@ -110,12 +109,15 @@ def query_command(require: str) -> str:
 
 def execute_command(command: str) -> str:
     """提取出query_command工具返回的命令（只提取对应主机系统的命令无需任何多余文字）并自动执行读取类命令，无法自动执行写入、删除之类的命令并警告用户后果，最后返回命令执行的结果"""
+    write_command = ["rm", "mv", "chmod", "chown", "kill", "cp", "touch", "mkdir", "Remove-Item"]
+    for pattern in write_command:
+        if re.search(pattern, command, re.IGNORECASE):  # 检查是否为危险命令，忽略命令大小写
+            return "错误：检测到潜在危险命令（写入/删除类操作）。为了安全起见，禁止执行此类命令。"
     run_result = "未知系统，无法执行命令"
     if platform.system() == "Windows":
-        result = subprocess.run(["powershell", "-Command", command], text=True,
-                                capture_output=True)  # text=True：命令的输出结果将以字符串形式返回，否则以字节流形式返回，capture_output=True：表示捕获命令的标准输出（stdout）和标准错误（stderr）
+        result = subprocess.run(["powershell", "-Command", command], text=True, capture_output=True)
         run_result = f"标准输出:\n{result.stdout}\n标准错误:\n{result.stderr}"
     elif platform.system() == "Linux":
-        result = subprocess.run(command, shell=True, text=True, capture_output=True)  # 若命令通过空格相连则需加上shell=True
+        result = subprocess.run(command, shell=True, text=True, capture_output=True, executable="/bin/bash")
         run_result = f"标准输出:\n{result.stdout}\n标准错误:\n{result.stderr}"
     return run_result

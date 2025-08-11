@@ -1,2 +1,2 @@
-1.如何强制使得某工具在调用前必须先调用某一工具？
-5.发布1.0.0版本；
+当前问题：
+1.execute_command工具正常执行完命令后会报错：标准输出:\n\n标准错误:\n/bin/sh: which: line 1: syntax error: unexpected end of file\n/bin/sh: error importing function definition for `which'\n
